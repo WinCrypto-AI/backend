@@ -69,7 +69,6 @@ export class AuthService {
     account.username = body.username;
     account.name = body.first_name + ' ' + body.last_name;
     account.referralCode = generateCodeHelper.generateReferralCode();
-
     return this.accountRepo.save(account);
   }
 }

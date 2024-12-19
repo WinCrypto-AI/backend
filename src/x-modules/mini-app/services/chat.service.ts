@@ -53,7 +53,24 @@ export class ChatService {
   getMessages(chatGroupId: string) {
     return this.messageRepo.find({ where: { chatGroupId }, order: { createdDate: 'ASC' } });
   }
-  sendMessage(body: SendMessageReq) {
-    return this.messageRepo.save(body);
+  async sendMessage(body: SendMessageReq) {
+    const account = await this.accountRepo
+      .findOne({
+        select: ['name', 'telegramId', 'avatar', 'username'],
+        where: {
+          id: body?.senderId,
+        },
+      })
+      .catch(_ => ({
+        name: 'guest',
+        telegramId: null,
+        avatar: '',
+        username: 'guest',
+      }));
+    const message = await this.messageRepo.save(body);
+    return {
+      message,
+      account,
+    };
   }
 }
