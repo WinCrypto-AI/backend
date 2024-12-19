@@ -16,8 +16,6 @@ import { configEnv } from './@config/env';
 import { HttpExceptionFilter, TypeOrmFilter } from './@systems/exceptions/http-exception-filter';
 import { ApiException } from './@systems/exceptions';
 import { setupTransactionContext } from './@core/decorator';
-import FcmAdmin from 'firebase-admin';
-import { join } from 'path';
 import { I18nValidationExceptionFilter } from 'nestjs-i18n';
 
 const configSwagger = (app: INestApplication) => {
@@ -62,23 +60,7 @@ const configSwagger = (app: INestApplication) => {
   SwaggerModule.setup('swagger', app, document);
 };
 
-const setupFireBaseAdmin = () => {
-  try {
-    const { FIREBASE_RESOURCE_PATH_FILE } = configEnv();
-    const serviceAccount = require(join(__dirname, FIREBASE_RESOURCE_PATH_FILE));
-
-    FcmAdmin.initializeApp({
-      credential: FcmAdmin.credential.cert(serviceAccount),
-      databaseURL: undefined,
-    });
-    console.log('Firebase Admin initialized');
-  } catch (error) {
-    console.log('Firebase Admin ERROR', error);
-  }
-};
-
 const bootstrap = async () => {
-  setupFireBaseAdmin();
   setupTransactionContext();
   const app = await NestFactory.create(AppModule);
   const port = process.env.PORT || 3000;

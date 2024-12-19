@@ -1,4 +1,4 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, Index } from 'typeorm';
+import { Column, Entity, Index } from 'typeorm';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { PrimaryBaseEntity } from '../primary-base.entity';
 import { NSAccount } from '~/common/enums';

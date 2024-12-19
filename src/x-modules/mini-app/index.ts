@@ -4,8 +4,9 @@ import { RefixModule } from '../config-module';
 import * as allService from './services';
 import * as allController from './controllers';
 import { MemberMiddleware } from './mini-app.middleware';
+import { ChatGateway } from './chat.gateway';
 
-const serviceIn = [];
+const serviceIn = [ChatGateway];
 
 @ChildModule({
   prefix: RefixModule.miniApp,
@@ -16,10 +17,16 @@ export class MemberModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(MemberMiddleware)
-      .exclude({
-        path: `${RefixModule.miniApp}/auth/telegram-login`.trim(),
-        method: RequestMethod.ALL,
-      })
+      .exclude(
+        {
+          path: `${RefixModule.miniApp}/auth/telegram-login`.trim(),
+          method: RequestMethod.ALL,
+        },
+        {
+          path: `${RefixModule.miniApp}/chat/(.*)`.trim(),
+          method: RequestMethod.ALL,
+        },
+      )
       .forRoutes({ path: `${RefixModule.miniApp}*`, method: RequestMethod.ALL });
   }
 }
