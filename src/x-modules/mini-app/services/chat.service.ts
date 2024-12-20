@@ -26,13 +26,13 @@ export class ChatService {
   private accountRepo: AccountRepo;
 
   @BindRepo(ChatGroupRepo)
-  private readonly chatGroupRepo: ChatGroupRepo;
+  private chatGroupRepo: ChatGroupRepo;
 
   @BindRepo(ChatGroupAccountRepo)
-  private readonly chatGroupAccountRepo: ChatGroupAccountRepo;
+  private chatGroupAccountRepo: ChatGroupAccountRepo;
 
   @BindRepo(MessageRepo)
-  private readonly messageRepo: MessageRepo;
+  private messageRepo: MessageRepo;
 
   groupDetail(code: string) {
     return this.chatGroupRepo.findOne({
@@ -50,8 +50,18 @@ export class ChatService {
     return this.chatGroupAccountRepo.save(body);
   }
 
-  getMessages(chatGroupId: string) {
-    return this.messageRepo.find({ where: { chatGroupId }, order: { createdDate: 'ASC' } });
+  async getMessages(chatGroupId: string) {
+    const res = await this.messageRepo.find({
+      where: { chatGroupId },
+      order: { createdDate: 'ASC' },
+    });
+    console.log(`-------------------`);
+    console.log({
+      res,
+      chatGroupId,
+    });
+    console.log(`-------------------`);
+    return res;
   }
   async sendMessage(body: SendMessageReq) {
     const account = await this.accountRepo
