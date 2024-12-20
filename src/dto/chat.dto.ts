@@ -1,4 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsUUID } from 'class-validator';
+import { PageRequest } from '~/@systems/utils';
 import { NSChatGroup } from '~/common/enums';
 
 export class CreateChatGroupReq {
@@ -26,4 +28,10 @@ export class SendMessageReq {
   senderId: string;
   @ApiProperty()
   content: string;
+}
+
+export class GetMessageReq extends PageRequest {
+  @ApiProperty()
+  @IsUUID('4')
+  chatGroupId: string;
 }

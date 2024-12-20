@@ -6,7 +6,12 @@ import { BusinessException } from '~/@systems/exceptions';
 import { I18nTranslations } from '~/assets/i18n.generated';
 import { generateCodeHelper } from '~/common/helpers/generate-code.helper';
 import { IUserTelegraf, TelegramLoginDto } from '~/dto/auth.dto';
-import { AddAccountToChatGroupReq, CreateChatGroupReq, SendMessageReq } from '~/dto/chat.dto';
+import {
+  AddAccountToChatGroupReq,
+  CreateChatGroupReq,
+  GetMessageReq,
+  SendMessageReq,
+} from '~/dto/chat.dto';
 import { AccountEntity } from '~/entities/primary';
 import {
   AccountRepo,
@@ -50,18 +55,18 @@ export class ChatService {
     return this.chatGroupAccountRepo.save(body);
   }
 
-  async getMessages(chatGroupId: string) {
-    const res = await this.messageRepo.find({
-      where: { chatGroupId },
-      order: { createdDate: 'ASC' },
-    });
-    console.log(`-------------------`);
-    console.log({
-      res,
-      chatGroupId,
-    });
-    console.log(`-------------------`);
-    return res;
+  async getMessages(params: GetMessageReq) {
+    const sql = `
+    SELECT
+      me.*,
+      to_json ( ac.* ) AS "account" 
+    FROM
+      message me
+      LEFT JOIN account ac ON me."senderId" = ac."id"
+      WHERE me."chatGroupId" = '${params?.chatGroupId}'
+      ORDER BY me."createdDate" ASC
+    `;
+    return this.messageRepo.queryPagination(sql, params);
   }
   async sendMessage(body: SendMessageReq) {
     const account = await this.accountRepo

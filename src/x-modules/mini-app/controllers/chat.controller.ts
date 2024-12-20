@@ -1,6 +1,11 @@
 import { Controller, Post, Body, Get, Param, Query } from '@nestjs/common';
 import { ChatService } from '../services';
-import { AddAccountToChatGroupReq, CreateChatGroupReq, SendMessageReq } from '~/dto/chat.dto';
+import {
+  AddAccountToChatGroupReq,
+  CreateChatGroupReq,
+  GetMessageReq,
+  SendMessageReq,
+} from '~/dto/chat.dto';
 import { DefController, DefGet, DefPost } from '~/@core/decorator';
 
 @DefController('chat')
@@ -28,7 +33,7 @@ export class ChatController {
   }
 
   @DefGet('messages')
-  async getMessages(@Query('chatGroupId') chatGroupId: string) {
-    return this.chatService.getMessages(chatGroupId);
+  async getMessages(@Query() params: GetMessageReq) {
+    return this.chatService.getMessages(params);
   }
 }
