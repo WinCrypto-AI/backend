@@ -64,7 +64,7 @@ export class ChatService {
       message me
       LEFT JOIN account ac ON me."senderId" = ac."id"
       WHERE me."chatGroupId" = '${params?.chatGroupId}'
-      ORDER BY me."createdDate" ASC
+      ORDER BY me."createdDate" DESC
     `;
     return this.messageRepo.queryPagination(sql, params);
   }
