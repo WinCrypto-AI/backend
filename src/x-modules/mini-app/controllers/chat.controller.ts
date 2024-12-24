@@ -12,6 +12,11 @@ import { DefController, DefGet, DefPost } from '~/@core/decorator';
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
+  @DefGet('list-group-system')
+  async listGroupSystem() {
+    return this.chatService.listGroupSystem();
+  }
+
   @DefGet('group/:code')
   async groupDetail(@Param('code') code: string) {
     return this.chatService.groupDetail(code);

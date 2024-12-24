@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { I18nService } from 'nestjs-i18n';
+import { In } from 'typeorm';
 import { BindRepo } from '~/@core/decorator';
 import { BusinessException } from '~/@systems/exceptions';
 import { I18nTranslations } from '~/assets/i18n.generated';
+import { SystemValue } from '~/common/constants';
 import { generateCodeHelper } from '~/common/helpers/generate-code.helper';
 import { IUserTelegraf, TelegramLoginDto } from '~/dto/auth.dto';
 import {
@@ -38,6 +40,14 @@ export class ChatService {
 
   @BindRepo(MessageRepo)
   private messageRepo: MessageRepo;
+
+  listGroupSystem() {
+    return this.chatGroupRepo.find({
+      where: {
+        code: In(SystemValue.GROUP_CODES.map(v => v.code)),
+      },
+    });
+  }
 
   groupDetail(code: string) {
     return this.chatGroupRepo.findOne({
