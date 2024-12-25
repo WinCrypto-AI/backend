@@ -1,30 +1,14 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { PrimaryBaseEntity } from '../primary-base.entity';
-import { NSSignal } from '~/common/enums/NSSignal';
 
 @Entity('notification')
 export class NotificationEntity extends PrimaryBaseEntity {
   @Column()
-  actionType: NSSignal.EActionType;
+  title: string;
 
   @Column()
-  type: NSSignal.EType;
+  desc: string;
 
-  @Column()
-  baseToken: string;
-
-  @Column({ default: 'USDT' })
-  quoteToken: string;
-
-  @Column({ type: 'decimal', precision: 10, scale: 4 })
-  entryPrice: number;
-
-  @Column({ type: 'decimal', precision: 10, scale: 4, nullable: true })
-  recordedPrice?: number;
-
-  @Column()
-  startDate: Date;
-
-  @Column({ nullable: true })
-  imageUrl: string;
+  @Column({ default: 'https://ui-avatars.com/api/?name=B&size=400&rounded=true' })
+  iconUrl: string;
 }

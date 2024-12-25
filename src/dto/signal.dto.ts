@@ -19,6 +19,12 @@ export class CreateSignalReq {
   @ApiProperty()
   quoteToken: string;
 
+  @ApiPropertyOptional({ default: 'https://ui-avatars.com/api/?name=B&size=400&rounded=true' })
+  baseTokenIcon?: string;
+
+  @ApiPropertyOptional({ default: 'https://ui-avatars.com/api/?name=B&size=400&rounded=true' })
+  quoteTokenIcon?: string;
+
   @ApiProperty()
   entryPrice: number;
 
