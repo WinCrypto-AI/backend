@@ -39,3 +39,16 @@ export class CreateSignalReq {
 }
 
 export class ListSignalReq extends PageRequest {}
+
+export class CreateNotificationReq {
+  @ApiProperty()
+  title: string;
+
+  @ApiProperty()
+  desc: string;
+
+  @ApiPropertyOptional({ default: 'https://ui-avatars.com/api/?name=B&size=400&rounded=true' })
+  iconUrl: string;
+}
+
+export class ListNotificationReq extends PageRequest {}
