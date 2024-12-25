@@ -26,6 +26,10 @@ export class MemberModule implements NestModule {
           path: `${RefixModule.miniApp}/chat/(.*)`.trim(),
           method: RequestMethod.ALL,
         },
+        {
+          path: `${RefixModule.miniApp}/signal/(.*)`.trim(),
+          method: RequestMethod.ALL,
+        },
       )
       .forRoutes({ path: `${RefixModule.miniApp}*`, method: RequestMethod.ALL });
   }

@@ -4,3 +4,4 @@ export * from './account.entity';
 export * from './chat-group-account.entity';
 export * from './chat-group.entity';
 export * from './message.entity';
+export * from './signal.entity';

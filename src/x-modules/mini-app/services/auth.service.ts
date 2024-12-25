@@ -47,7 +47,6 @@ export class AuthService {
         await this.accountRepo.update({ id: account.id }, updateData);
       }
     }
-
     return this.createSessionData(account);
   }
 
