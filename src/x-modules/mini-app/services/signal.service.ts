@@ -26,7 +26,14 @@ export class SignalService {
   }
 
   list(params: ListSignalReq) {
-    return this.signalRepo.findPagination({}, params);
+    return this.signalRepo.findPagination(
+      {
+        order: {
+          createdDate: 'DESC',
+        },
+      },
+      params,
+    );
   }
 
   async detail(params: UUIDReq) {

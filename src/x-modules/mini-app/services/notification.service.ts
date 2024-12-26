@@ -23,7 +23,14 @@ export class NotificationService {
   }
 
   list(params: ListNotificationReq) {
-    return this.notificationRepo.findPagination({}, params);
+    return this.notificationRepo.findPagination(
+      {
+        order: {
+          createdDate: 'DESC',
+        },
+      },
+      params,
+    );
   }
 
   async detail(params: UUIDReq) {
