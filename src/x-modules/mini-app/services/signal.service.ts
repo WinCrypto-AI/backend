@@ -6,7 +6,7 @@ import { BusinessException } from '~/@systems/exceptions';
 import { I18nTranslations } from '~/assets/i18n.generated';
 import { UUIDReq } from '~/dto/common.dto';
 import { CreateSignalReq, ListSignalReq } from '~/dto/signal.dto';
-import { AccountRepo, SignalRepo } from '~/repositories/primary';
+import { AccountRepo, NotificationRepo, SignalRepo } from '~/repositories/primary';
 
 @Injectable()
 export class SignalService {
@@ -21,7 +21,15 @@ export class SignalService {
   @BindRepo(SignalRepo)
   private signalRepo: SignalRepo;
 
-  create(body: CreateSignalReq) {
+  @BindRepo(NotificationRepo)
+  private notificationRepo: NotificationRepo;
+
+  async create(body: CreateSignalReq) {
+    await this.notificationRepo.save({
+      iconUrl: body?.baseTokenIcon,
+      title: `Signal ${body?.actionType} ${body?.baseToken}`,
+      desc: `Signal ${body?.actionType} ${body?.baseToken}`,
+    });
     return this.signalRepo.save(body);
   }
 

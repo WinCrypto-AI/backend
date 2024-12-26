@@ -52,3 +52,16 @@ export class CreateNotificationReq {
 }
 
 export class ListNotificationReq extends PageRequest {}
+
+export class CreateReportReq {
+  @ApiProperty()
+  title: string;
+
+  @ApiProperty({ default: '' })
+  content: string;
+
+  @ApiPropertyOptional({ default: 'https://ui-avatars.com/api/?name=B&size=400&rounded=true' })
+  fileUrl: string;
+}
+
+export class ListReportReq extends PageRequest {}
