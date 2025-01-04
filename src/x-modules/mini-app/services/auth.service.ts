@@ -5,7 +5,7 @@ import { BindRepo } from '~/@core/decorator';
 import { BusinessException } from '~/@systems/exceptions';
 import { I18nTranslations } from '~/assets/i18n.generated';
 import { generateCodeHelper } from '~/common/helpers/generate-code.helper';
-import { IUserTelegraf, TelegramLoginDto } from '~/dto/auth.dto';
+import { IUserTelegraf, SyncWalletReq, TelegramLoginDto } from '~/dto/auth.dto';
 import { AccountEntity } from '~/entities/primary';
 import { AccountRepo } from '~/repositories/primary';
 
@@ -68,6 +68,15 @@ export class AuthService {
     account.username = body.username;
     account.name = body.first_name + ' ' + body.last_name;
     account.referralCode = generateCodeHelper.generateReferralCode();
+    return this.accountRepo.save(account);
+  }
+
+  async syncWallet(accountId: string, body: SyncWalletReq) {
+    const account = await this.accountRepo.findOne(accountId);
+    if (!account) {
+      throw new BusinessException('Account not existed ');
+    }
+    account.walletAddress = body?.walletAddress;
     return this.accountRepo.save(account);
   }
 }

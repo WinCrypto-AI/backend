@@ -83,3 +83,12 @@ export class TelegramLoginDto {
   })
   hash: string;
 }
+
+export class SyncWalletReq {
+  @ApiProperty({
+    description: 'walletAddress',
+    example: 'EQDyG9grqyJdW8epiDxRbscw9yUO7LSCS8xFWnTexumdtM1L',
+  })
+  @IsNotEmpty()
+  walletAddress: string;
+}

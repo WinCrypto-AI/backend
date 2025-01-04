@@ -27,6 +27,10 @@ export class AccountEntity extends PrimaryBaseEntity {
   @Column({ default: NSAccount.EStatus.ACTIVE })
   status?: NSAccount.EStatus.ACTIVE;
 
+  @ApiPropertyOptional()
+  @Column({ default: NSAccount.EType.FREE })
+  type?: NSAccount.EType.FREE;
+
   @ApiProperty()
   @Column({ nullable: true })
   walletAddress: string;

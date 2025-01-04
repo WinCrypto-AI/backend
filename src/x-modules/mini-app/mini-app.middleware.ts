@@ -7,10 +7,10 @@ import { KeyHeader, KeySessionContext } from '~/common/constants';
 import { AccountSessionDto, AccountSessionPayload } from '~/dto/auth.dto';
 
 @Injectable()
-export class MemberMiddleware implements NestMiddleware {
+export class MiniAppMiddleware implements NestMiddleware {
   constructor(private jwtService: JwtService) {}
   async use(req: Request, res: Response, next: Function) {
-    console.log('--------MemberMiddleware-----------');
+    console.log('--------MiniAppMiddleware-----------');
     const { JWT_SECRET } = configEnv();
     try {
       const { headers = {} } = req;

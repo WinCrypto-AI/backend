@@ -2,7 +2,7 @@ import { RequestContext } from '~/@core/context';
 import { KeySessionContext } from '~/common/constants';
 import { AccountSessionDto } from '~/dto/auth.dto';
 
-export class AccountSessionContext {
+export class MiniAppSessionContext {
   get sessionData() {
     return RequestContext.getAttribute<AccountSessionDto>(KeySessionContext.ACCOUNT_SESSION);
   }
@@ -10,7 +10,7 @@ export class AccountSessionContext {
   get accessToken() {
     return this.sessionData.accessToken;
   }
-  get memberId() {
+  get accountId() {
     return this?.sessionData?.sub;
   }
   get username() {
@@ -18,4 +18,4 @@ export class AccountSessionContext {
   }
 }
 
-export const accountSessionContext = new AccountSessionContext();
+export const miniAppSessionContext = new MiniAppSessionContext();
