@@ -39,6 +39,9 @@ export class CreateSignalReq {
 
   @ApiPropertyOptional({ default: NSAccount.EType.FREE, enum: NSAccount.EType })
   accountType?: NSAccount.EType;
+
+  @ApiPropertyOptional()
+  note?: string;
 }
 
 export class ListSignalReq extends PageRequest {
@@ -68,6 +71,12 @@ export class CreateReportReq {
 
   @ApiPropertyOptional({ default: 'https://ui-avatars.com/api/?name=B&size=400&rounded=true' })
   fileUrl: string;
+
+  @ApiPropertyOptional({ default: NSAccount.EType.FREE, enum: NSAccount.EType })
+  accountType?: NSAccount.EType;
 }
 
-export class ListReportReq extends PageRequest {}
+export class ListReportReq extends PageRequest {
+  @ApiPropertyOptional({ default: NSAccount.EType.FREE, enum: NSAccount.EType })
+  accountType?: NSAccount.EType;
+}

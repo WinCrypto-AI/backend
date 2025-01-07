@@ -39,4 +39,8 @@ export class SignalEntity extends PrimaryBaseEntity {
   @ApiPropertyOptional()
   @Column({ default: NSAccount.EType.FREE })
   accountType?: NSAccount.EType;
+
+  @ApiPropertyOptional()
+  @Column({ type: 'text', nullable: true })
+  note?: string;
 }
