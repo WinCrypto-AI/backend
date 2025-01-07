@@ -20,8 +20,12 @@ export class ExampleProvider {
     try {
       // + group free
       // + Group $200
+
+      // CTV MOI_GIOI 2000
+
       // + Channel OG
       // + Channel Broker
+
       const { GROUP_CODES: groupCodes } = SystemValue;
       for (const { code, name } of groupCodes) {
         const group = await this.chatGroupRepo.findOne({

@@ -14,7 +14,6 @@ import {
   GetMessageReq,
   SendMessageReq,
 } from '~/dto/chat.dto';
-import { AccountEntity } from '~/entities/primary';
 import {
   AccountRepo,
   ChatGroupAccountRepo,

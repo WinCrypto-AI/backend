@@ -1,7 +1,7 @@
 import { DefController, DefGet } from '~/@core/decorator';
 import { PublicService } from '../services';
-import { apeApiConnector } from '~/common/connectors';
 import { NSAccount } from '~/common/enums';
+import { SystemValue } from '~/common/constants';
 
 @DefController('')
 export class PublicController {
@@ -14,15 +14,10 @@ export class PublicController {
 
   @DefGet('payment-config')
   paymentConfig() {
-    return [
-      {
-        type: NSAccount.EType.PAID_200,
-        value: 0.1,
-      },
-      {
-        type: NSAccount.EType.PAID_2000,
-        value: 0.2,
-      },
-    ];
+    const { PAYMENT_CONFIG } = SystemValue;
+    return Object.keys(PAYMENT_CONFIG).map(type => ({
+      type,
+      value: PAYMENT_CONFIG[type],
+    }));
   }
 }

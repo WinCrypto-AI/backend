@@ -29,7 +29,7 @@ export class AccountEntity extends PrimaryBaseEntity {
 
   @ApiPropertyOptional()
   @Column({ default: NSAccount.EType.FREE })
-  type?: NSAccount.EType.FREE;
+  type?: NSAccount.EType;
 
   @ApiProperty()
   @Column({ nullable: true })

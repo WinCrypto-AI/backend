@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { Address } from '@ton/core';
 import { I18nService } from 'nestjs-i18n';
 import { BindRepo } from '~/@core/decorator';
 import { BusinessException } from '~/@systems/exceptions';
@@ -76,7 +77,8 @@ export class AuthService {
     if (!account) {
       throw new BusinessException('Account not existed ');
     }
-    account.walletAddress = body?.walletAddress;
+    const hexAddress = Address.parse(body?.walletAddress).toRawString();
+    account.walletAddress = hexAddress;
     return this.accountRepo.save(account);
   }
 }

@@ -22,5 +22,6 @@ declare namespace NodeJS {
     JWT_EXPIRY: string;
     JWT_REFRESH_TOKEN_SECRET: string;
     JWT_REFRESH_TOKEN_EXPIRY: string;
+    TELEGRAM_BOT_TOKEN_WIN_CRYPTO: string;
   }
 }
