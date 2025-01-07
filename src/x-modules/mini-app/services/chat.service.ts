@@ -43,7 +43,7 @@ export class ChatService {
   listGroupSystem() {
     return this.chatGroupRepo.find({
       where: {
-        code: In(SystemValue.GROUP_CODES.map(v => v.code)),
+        code: In(SystemValue.LIST_GROUP.map(v => v.code)),
       },
     });
   }

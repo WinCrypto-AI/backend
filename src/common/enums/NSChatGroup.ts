@@ -3,4 +3,8 @@ export namespace NSChatGroup {
     MEMBER = 'MEMBER',
     ADMIN = 'ADMIN',
   }
+  export enum EType {
+    GLOBAL = 'GLOBAL',
+    VN = 'VN',
+  }
 }

@@ -26,8 +26,8 @@ export class ExampleProvider {
       // + Channel OG
       // + Channel Broker
 
-      const { GROUP_CODES: groupCodes } = SystemValue;
-      for (const { code, name } of groupCodes) {
+      const { LIST_GROUP: listGroup } = SystemValue;
+      for (const { code, name, type } of listGroup) {
         const group = await this.chatGroupRepo.findOne({
           where: {
             code,
@@ -37,6 +37,7 @@ export class ExampleProvider {
           await this.chatGroupRepo.save({
             code,
             name,
+            type,
           });
         }
       }

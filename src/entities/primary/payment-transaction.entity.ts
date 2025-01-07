@@ -1,7 +1,7 @@
 import { Column, Entity, Index } from 'typeorm';
 import { PrimaryBaseEntity } from '../primary-base.entity';
 
-@Entity()
+@Entity('payment_transaction')
 export class PaymentTransactionEntity extends PrimaryBaseEntity {
   @Column({ type: 'uuid' })
   @Index()
