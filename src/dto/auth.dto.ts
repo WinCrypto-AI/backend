@@ -1,8 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNotEmpty, IsUUID } from 'class-validator';
 import * as jwt from 'jsonwebtoken';
-import { User as IUserTelegraf } from 'telegraf/typings/core/types/typegram';
+import { User as IUser } from 'telegraf/typings/core/types/typegram';
 import { NSAccount } from '~/common/enums';
+
+interface IUserTelegraf extends IUser {
+  photoUrl?: string;
+}
 
 export class LoginReq {
   @ApiProperty()
@@ -72,6 +76,7 @@ export class TelegramLoginDto {
       username: 'QuyNguyen034',
       language_code: 'vi',
       allows_write_to_pm: true,
+      photoUrl: 'https://ui-avatars.com/api/?name=W&size=400&rounded=true',
     },
   })
   user: IUserTelegraf;

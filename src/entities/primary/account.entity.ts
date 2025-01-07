@@ -35,9 +35,7 @@ export class AccountEntity extends PrimaryBaseEntity {
   @Column({ nullable: true })
   walletAddress: string;
 
-  @Column({
-    nullable: true,
-  })
+  @Column({ nullable: true })
   @ApiProperty()
   avatar?: string;
 

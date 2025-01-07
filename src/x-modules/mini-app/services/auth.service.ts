@@ -80,6 +80,12 @@ export class AuthService {
           name,
         });
       }
+      if (body?.user?.photoUrl) {
+        Object.assign(updateData, {
+          avatar: body?.user?.photoUrl,
+        });
+      }
+
       if (Object.keys(updateData).length) {
         await this.accountRepo.update({ id: account.id }, updateData);
       }
@@ -108,6 +114,7 @@ export class AuthService {
     account.telegramId = `${body.id}`;
     account.username = body.username;
     account.name = body.first_name + ' ' + body.last_name;
+    account.avatar = body?.photoUrl;
     account.referralCode = generateCodeHelper.generateReferralCode();
     return this.accountRepo.save(account);
   }
