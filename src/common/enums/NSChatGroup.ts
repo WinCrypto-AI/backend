@@ -7,4 +7,8 @@ export namespace NSChatGroup {
     GLOBAL = 'GLOBAL',
     VN = 'VN',
   }
+  export enum EMode {
+    GROUP = 'GROUP', // Dạng nhóm
+    CHANNEL = 'CHANNEL', // Dạng kênh
+  }
 }

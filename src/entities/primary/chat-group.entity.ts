@@ -17,6 +17,10 @@ export class ChatGroupEntity extends PrimaryBaseEntity {
   @Column({ default: NSChatGroup.EType.GLOBAL })
   type: NSChatGroup.EType;
 
+  @ApiProperty()
+  @Column({ default: NSChatGroup.EMode.GROUP })
+  mode: NSChatGroup.EMode;
+
   @ApiPropertyOptional()
   @Column({ nullable: true })
   desc?: string;

@@ -33,7 +33,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     },
     @ConnectedSocket() client: Socket,
   ) {
-    await this.chatService.addAccountToGroup(data);
+    this.chatService.addAccountToGroup(data);
     client.join(data.chatGroupId);
     console.log(
       `Client ${client.id} , account: ${data.accountId} ,joined group ${data.chatGroupId}`,

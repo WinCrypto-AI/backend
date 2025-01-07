@@ -17,7 +17,7 @@ export class ChatGroupAccountEntity extends PrimaryBaseEntity {
   accountId: string;
 
   @ApiProperty()
-  @Column({ default: NSChatGroup.ERole })
+  @Column({ default: NSChatGroup.ERole.MEMBER })
   role: NSChatGroup.ERole;
 
   @ApiProperty()
