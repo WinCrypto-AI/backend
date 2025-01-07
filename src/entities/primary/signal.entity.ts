@@ -1,6 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { PrimaryBaseEntity } from '../primary-base.entity';
 import { NSSignal } from '~/common/enums/NSSignal';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { NSAccount } from '~/common/enums';
 
 @Entity('signal')
 export class SignalEntity extends PrimaryBaseEntity {
@@ -33,4 +35,8 @@ export class SignalEntity extends PrimaryBaseEntity {
 
   @Column({ nullable: true })
   imageUrl: string;
+
+  @ApiPropertyOptional()
+  @Column({ default: NSAccount.EType.FREE })
+  accountType?: NSAccount.EType;
 }

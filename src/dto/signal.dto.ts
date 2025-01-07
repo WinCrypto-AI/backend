@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { PageRequest } from '~/@systems/utils';
-import { NSSignal } from '~/common/enums';
+import { NSAccount, NSSignal } from '~/common/enums';
 
 export class CreateSignalReq {
   @ApiProperty({
@@ -36,9 +36,15 @@ export class CreateSignalReq {
 
   @ApiPropertyOptional()
   imageUrl?: string;
+
+  @ApiPropertyOptional({ default: NSAccount.EType.FREE, enum: NSAccount.EType })
+  accountType?: NSAccount.EType;
 }
 
-export class ListSignalReq extends PageRequest {}
+export class ListSignalReq extends PageRequest {
+  @ApiPropertyOptional({ default: NSAccount.EType.FREE, enum: NSAccount.EType })
+  accountType?: NSAccount.EType;
+}
 
 export class CreateNotificationReq {
   @ApiProperty()
