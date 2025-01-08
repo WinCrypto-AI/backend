@@ -46,6 +46,10 @@ export class MemberModule implements NestModule {
           path: `${RefixModule.miniApp}/publics/(.*)`.trim(),
           method: RequestMethod.ALL,
         },
+        {
+          path: `${RefixModule.miniApp}/admin/(.*)`.trim(),
+          method: RequestMethod.ALL,
+        },
       )
       .forRoutes({ path: `${RefixModule.miniApp}*`, method: RequestMethod.ALL });
   }
