@@ -9,6 +9,6 @@ import * as allController from './controllers';
   providers: [...Object.values(allService)],
   controllers: [...Object.values(allController)],
 })
-export class PublicModule implements NestModule {
+export class AdminModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {}
 }
