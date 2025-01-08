@@ -2,12 +2,11 @@ import { Injectable, NestMiddleware, UnauthorizedException } from '@nestjs/commo
 import { JwtService } from '@nestjs/jwt';
 import { Request, Response } from 'express';
 import { configEnv } from '~/@config/env';
-import { RequestContext } from '~/@core/context';
-import { KeyHeader, KeySessionContext } from '~/common/constants';
-import { AccountSessionDto, AccountSessionPayload } from '~/dto/auth.dto';
+import { KeyHeader } from '~/common/constants';
+import { AccountSessionPayload } from '~/dto/auth.dto';
 
 @Injectable()
-export class MiniAppMiddleware implements NestMiddleware {
+export class AccountMiddleware implements NestMiddleware {
   constructor(private jwtService: JwtService) {}
   async use(req: Request, res: Response, next: Function) {
     console.log('--------MiniAppMiddleware-----------');
@@ -24,14 +23,8 @@ export class MiniAppMiddleware implements NestMiddleware {
         throw new UnauthorizedException('Unauthorized');
       }
       try {
-        const payload = await this.jwtService.verifyAsync<AccountSessionPayload>(accessToken, {
+        await this.jwtService.verifyAsync<AccountSessionPayload>(accessToken, {
           secret: JWT_SECRET,
-        });
-        RequestContext.setAttribute<AccountSessionDto>(KeySessionContext.ACCOUNT_SESSION, {
-          accessToken,
-          refreshToken: '',
-          tokenType: 'Bearer',
-          ...payload,
         });
         next();
       } catch (error) {

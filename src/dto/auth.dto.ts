@@ -37,17 +37,17 @@ export class JwtPayload implements jwt.JwtPayload {
 
 export class AccountSessionPayload extends JwtPayload {
   @ApiProperty()
-  id: string;
+  id?: string;
 
   @ApiProperty()
-  telegramId: string;
+  telegramId?: string;
 
   /** Tên đăng nhập */
   @ApiProperty()
-  username: string;
+  username?: string;
 
   @ApiProperty({ enum: NSAccount.EStatus })
-  status: NSAccount.EStatus;
+  status?: NSAccount.EStatus;
 
   @ApiPropertyOptional()
   fullName?: string;

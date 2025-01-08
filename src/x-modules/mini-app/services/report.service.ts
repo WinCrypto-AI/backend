@@ -8,7 +8,8 @@ import { I18nTranslations } from '~/assets/i18n.generated';
 import { NSAccount } from '~/common/enums';
 import { UUIDReq } from '~/dto/common.dto';
 import { CreateReportReq, ListReportReq } from '~/dto/signal.dto';
-import { ReportRepo } from '~/repositories/primary';
+import { AccountRepo, ReportRepo } from '~/repositories/primary';
+import { miniAppSessionContext } from '../config/mini-app-session.context';
 
 @Injectable()
 export class ReportService {
@@ -20,18 +21,26 @@ export class ReportService {
   @BindRepo(ReportRepo)
   private reportRepo: ReportRepo;
 
+  @BindRepo(AccountRepo)
+  private accountRepo: AccountRepo;
+
   create(body: CreateReportReq) {
     return this.reportRepo.save(body);
   }
 
-  list(params: ListReportReq) {
+  async list(params: ListReportReq) {
+    let accountType = NSAccount.EType.FREE;
+    if (miniAppSessionContext?.accountId) {
+      const account = await this.accountRepo.findOne(miniAppSessionContext?.accountId);
+      if (account) {
+        accountType = account.type;
+      }
+    }
     const listTypes = [NSAccount.EType.FREE];
-
-    if (params?.accountType === NSAccount.EType.PAID_200) {
+    if (accountType === NSAccount.EType.PAID_200) {
       listTypes.push(NSAccount.EType.PAID_200);
     }
-
-    if (params?.accountType === NSAccount.EType.PAID_2000) {
+    if (accountType === NSAccount.EType.PAID_2000) {
       listTypes.push(NSAccount.EType.PAID_200, NSAccount.EType.PAID_2000);
     }
     return this.reportRepo.findPagination(

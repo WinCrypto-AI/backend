@@ -3,8 +3,9 @@ import { MiddlewareConsumer, NestModule, RequestMethod } from '@nestjs/common';
 import { RefixModule } from '../config-module';
 import * as allService from './services';
 import * as allController from './controllers';
-import { MiniAppMiddleware } from './mini-app.middleware';
+import { AccountMiddleware } from './config/account.middleware';
 import { ChatGateway } from './chat.gateway';
+import { TokenAccountMiddleware } from './config/token-account.middleware';
 
 const serviceIn = [ChatGateway];
 
@@ -16,7 +17,10 @@ const serviceIn = [ChatGateway];
 export class MemberModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(MiniAppMiddleware)
+      .apply(TokenAccountMiddleware)
+      .forRoutes({ path: `${RefixModule.miniApp}*`, method: RequestMethod.ALL });
+    consumer
+      .apply(AccountMiddleware)
       .exclude(
         {
           path: `${RefixModule.miniApp}/auth/telegram-login`.trim(),

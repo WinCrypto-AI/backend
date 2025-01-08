@@ -2,7 +2,7 @@ import { DefController, DefGet, DefPost } from '~/@core/decorator';
 import { AuthService } from '../services';
 import { Body } from '@nestjs/common';
 import { SyncWalletReq, TelegramLoginDto } from '~/dto/auth.dto';
-import { miniAppSessionContext } from '../mini-app-session.context';
+import { miniAppSessionContext } from '../config/mini-app-session.context';
 
 @DefController('auth')
 export class AuthMemberController {

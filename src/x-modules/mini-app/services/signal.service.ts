@@ -10,6 +10,7 @@ import { UUIDReq } from '~/dto/common.dto';
 import { CreateSignalReq, ListSignalReq } from '~/dto/signal.dto';
 import { SignalEntity } from '~/entities/primary';
 import { AccountRepo, NotificationRepo, SignalRepo } from '~/repositories/primary';
+import { miniAppSessionContext } from '../config/mini-app-session.context';
 
 @Injectable()
 export class SignalService {
@@ -36,14 +37,19 @@ export class SignalService {
     return this.signalRepo.save(body);
   }
 
-  list(params: ListSignalReq) {
+  async list(params: ListSignalReq) {
+    let accountType = NSAccount.EType.FREE;
+    if (miniAppSessionContext?.accountId) {
+      const account = await this.accountRepo.findOne(miniAppSessionContext?.accountId);
+      if (account) {
+        accountType = account.type;
+      }
+    }
     const listTypes = [NSAccount.EType.FREE];
-
-    if (params?.accountType === NSAccount.EType.PAID_200) {
+    if (accountType === NSAccount.EType.PAID_200) {
       listTypes.push(NSAccount.EType.PAID_200);
     }
-
-    if (params?.accountType === NSAccount.EType.PAID_2000) {
+    if (accountType === NSAccount.EType.PAID_2000) {
       listTypes.push(NSAccount.EType.PAID_200, NSAccount.EType.PAID_2000);
     }
     return this.signalRepo.findPagination(
