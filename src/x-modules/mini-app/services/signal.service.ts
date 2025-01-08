@@ -28,15 +28,6 @@ export class SignalService {
   @BindRepo(NotificationRepo)
   private notificationRepo: NotificationRepo;
 
-  async create(body: CreateSignalReq) {
-    await this.notificationRepo.save({
-      iconUrl: body?.baseTokenIcon,
-      title: `Signal ${body?.actionType} ${body?.baseToken}`,
-      desc: `Signal ${body?.actionType} ${body?.baseToken}`,
-    });
-    return this.signalRepo.save(body);
-  }
-
   async list(params: ListSignalReq) {
     let accountType = NSAccount.EType.FREE;
     if (miniAppSessionContext?.accountId) {

@@ -8,6 +8,11 @@ import { ReportService } from '../services';
 export class ReportController {
   constructor(private readonly reportService: ReportService) {}
 
+  @DefPost('create')
+  create(@Body() body: CreateReportReq) {
+    return this.reportService.create(body);
+  }
+
   @DefGet('list')
   list(@Query() params: ListReportReq) {
     return this.reportService.list(params);
