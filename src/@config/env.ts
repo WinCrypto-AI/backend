@@ -55,7 +55,7 @@ export function configEnv(): IEnvConfig {
     TON_CHAIN_CONFIG: {
       endpoint: 'https://toncenter.com/api/v2/jsonRPC',
       apiKey: '098e02ddbfc413662e997360561b39e176b1cfd4c40b87db2e0c96c9cbf0ce13',
-      ROOT_WALLET: 'UQDyG9grqyJdW8epiDxRbscw9yUO7LSCS8xFWnTexumdtJCO',
+      ROOT_WALLET: 'UQAAdF7D6xCobLrcTuU9Xr3sg2kIzRbodyvzoh035boKswha',
     },
     DBS: [
       {
