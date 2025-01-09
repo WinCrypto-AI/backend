@@ -48,7 +48,7 @@ export class AuthService {
   private getListGroupByAccountType(accountType: NSAccount.EType) {
     const codes = GROUP_BY_ACCOUNT_TYPE[accountType];
     return this.chatGroupRepo.find({
-      select: ['id', 'name', 'code', 'type'],
+      select: ['id', 'name', 'code', 'type', 'mode'],
       where: {
         code: In(codes),
       },
