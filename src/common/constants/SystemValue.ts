@@ -33,7 +33,7 @@ export const SystemValue = {
   ],
   PAYMENT_CONFIG: {
     // [NSAccount.EType.FREE]: 0,
-    [NSAccount.EType.PAID_200]: 0.1,
-    [NSAccount.EType.PAID_2000]: 0.2,
+    [NSAccount.EType.PAID_200]: 40,
+    [NSAccount.EType.PAID_2000]: 400,
   },
 };
