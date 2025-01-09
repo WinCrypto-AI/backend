@@ -10,7 +10,7 @@ export class SignalEntity extends PrimaryBaseEntity {
   actionType: NSSignal.EActionType;
 
   @Column()
-  type: NSSignal.EType;
+  type: string;
 
   @Column()
   baseToken: string;

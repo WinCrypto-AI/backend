@@ -43,4 +43,7 @@ export class ReportService {
     }
     return report;
   }
+  delete(body: UUIDReq) {
+    return this.reportRepo.delete(body?.id);
+  }
 }

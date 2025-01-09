@@ -51,4 +51,8 @@ export class SignalService {
     }
     return signal;
   }
+
+  delete(body: UUIDReq) {
+    return this.signalRepo.delete(body?.id);
+  }
 }

@@ -16,3 +16,8 @@ export class EmptyPageResponse {
   @ApiProperty()
   total = 0;
 }
+
+export class AddressReq {
+  @ApiProperty()
+  address: string;
+}

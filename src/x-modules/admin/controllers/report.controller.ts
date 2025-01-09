@@ -13,6 +13,11 @@ export class ReportController {
     return this.reportService.create(body);
   }
 
+  @DefPost('delete')
+  delete(@Body() body: UUIDReq) {
+    return this.reportService.delete(body);
+  }
+
   @DefGet('list')
   list(@Query() params: ListReportReq) {
     return this.reportService.list(params);

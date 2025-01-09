@@ -8,10 +8,8 @@ export class CreateSignalReq {
   })
   actionType: NSSignal.EActionType;
 
-  @ApiProperty({
-    enum: NSSignal.EType,
-  })
-  type: NSSignal.EType;
+  @ApiProperty()
+  type: string;
 
   @ApiProperty()
   baseToken: string;

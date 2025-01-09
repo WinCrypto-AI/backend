@@ -13,6 +13,11 @@ export class SignalController {
     return this.signalService.create(body);
   }
 
+  @DefPost('delete')
+  delete(@Body() body: UUIDReq) {
+    return this.signalService.delete(body);
+  }
+
   @DefGet('list')
   list(@Query() params: ListSignalReq) {
     return this.signalService.list(params);
