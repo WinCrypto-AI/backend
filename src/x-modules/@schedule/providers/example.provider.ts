@@ -3,9 +3,11 @@ import { Timeout } from '@nestjs/schedule';
 import { BindRepo } from '~/@core/decorator';
 import { SystemValue } from '~/common/constants';
 import { ChatGroupRepo } from '~/repositories/primary';
+import { SetupService } from '../services';
 
 @Injectable()
 export class ExampleProvider {
+  constructor(private readonly setupService: SetupService) {}
   @BindRepo(ChatGroupRepo)
   private chatGroupRepo: ChatGroupRepo;
 
@@ -43,6 +45,17 @@ export class ExampleProvider {
       }
     } catch (error) {
       console.log(`=====initGroup=====`, error);
+    }
+  }
+
+  @Timeout(1000)
+  async initTelegramBot() {
+    try {
+      console.log(`=====initTelegramBott=====`);
+      this.setupService.initTelegramBot();
+      console.log(`=====initTelegramBott SUCCESS=====`);
+    } catch (error) {
+      console.error(`=====initTelegramBott ERROR=====`, error);
     }
   }
 }

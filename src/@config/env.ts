@@ -40,6 +40,7 @@ export function configEnv(): IEnvConfig {
     JWT_EXPIRY,
     JWT_REFRESH_TOKEN_SECRET,
     JWT_REFRESH_TOKEN_EXPIRY,
+    TELEGRAM_BOT_TOKEN_WIN_CRYPTO,
   } = process.env;
   return {
     REQUEST_TIMEOUT: Number(REQUEST_TIMEOUT),
@@ -50,6 +51,7 @@ export function configEnv(): IEnvConfig {
     JWT_EXPIRY,
     JWT_REFRESH_TOKEN_SECRET,
     JWT_REFRESH_TOKEN_EXPIRY,
+    TELEGRAM_BOT_TOKEN_WIN_CRYPTO,
     TON_CHAIN_CONFIG: {
       endpoint: 'https://toncenter.com/api/v2/jsonRPC',
       apiKey: '098e02ddbfc413662e997360561b39e176b1cfd4c40b87db2e0c96c9cbf0ce13',
