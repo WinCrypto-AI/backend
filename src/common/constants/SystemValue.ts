@@ -30,16 +30,11 @@ export const SystemValue = {
     },
     {
       code: GROUP_CODES.group_2000u,
-      name: 'GROUP 2000U GLOBAL',
-      type: NSChatGroup.EType.GLOBAL,
-      mode: NSChatGroup.EMode.CHANNEL,
-    },
-    {
-      code: GROUP_CODES.chanel_og,
       name: 'CHANEL OG GLOBAL',
       type: NSChatGroup.EType.GLOBAL,
       mode: NSChatGroup.EMode.CHANNEL,
     },
+
     {
       code: GROUP_CODES.channel_broker,
       name: 'CHANNEL BROKER GLOBAL',
@@ -60,12 +55,6 @@ export const SystemValue = {
     },
     {
       code: GROUP_CODES.group_2000u_vn,
-      name: 'GROUP 2000U VN',
-      type: NSChatGroup.EType.VN,
-      mode: NSChatGroup.EMode.CHANNEL,
-    },
-    {
-      code: GROUP_CODES.chanel_og_vn,
       name: 'CHANEL OG VN',
       type: NSChatGroup.EType.VN,
       mode: NSChatGroup.EMode.CHANNEL,
