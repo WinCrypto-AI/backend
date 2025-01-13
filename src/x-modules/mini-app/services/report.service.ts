@@ -45,7 +45,7 @@ export class ReportService {
           accountType: In(listTypes),
         },
         order: {
-          createdDate: 'DESC',
+          createdDate: params?.sort || 'DESC',
         },
       },
       params,

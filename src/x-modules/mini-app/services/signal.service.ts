@@ -49,7 +49,7 @@ export class SignalService {
           accountType: In(listTypes),
         },
         order: {
-          createdDate: 'DESC',
+          createdDate: params?.sort || 'DESC',
         },
       },
       params,

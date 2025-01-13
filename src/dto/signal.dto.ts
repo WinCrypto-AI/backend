@@ -43,8 +43,8 @@ export class CreateSignalReq {
 }
 
 export class ListSignalReq extends PageRequest {
-  // @ApiPropertyOptional({ default: NSAccount.EType.FREE, enum: NSAccount.EType })
-  // accountType?: NSAccount.EType;
+  @ApiPropertyOptional({ default: 'DESC', enum: ['DESC', 'ASC'] })
+  sort?: 'DESC' | 'ASC';
 }
 
 export class CreateNotificationReq {
@@ -74,4 +74,7 @@ export class CreateReportReq {
   accountType?: NSAccount.EType;
 }
 
-export class ListReportReq extends PageRequest {}
+export class ListReportReq extends PageRequest {
+  @ApiPropertyOptional({ default: 'DESC', enum: ['DESC', 'ASC'] })
+  sort?: 'DESC' | 'ASC';
+}
