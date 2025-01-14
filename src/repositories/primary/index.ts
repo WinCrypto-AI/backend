@@ -1,4 +1,5 @@
 
+export * from './account-referral.repo';
 export * from './account-wallet.repo';
 export * from './account.repo';
 export * from './chat-group-account.repo';
@@ -8,3 +9,4 @@ export * from './notification.repo';
 export * from './payment-transaction.repo';
 export * from './report.repo';
 export * from './signal.repo';
+export * from './telegram-user.repo';

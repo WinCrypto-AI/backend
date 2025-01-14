@@ -3,15 +3,21 @@ import { JwtService } from '@nestjs/jwt';
 import { Address } from '@ton/core';
 import { I18nService } from 'nestjs-i18n';
 import { In } from 'typeorm';
-import { BindRepo } from '~/@core/decorator';
+import { BindRepo, DefTransaction } from '~/@core/decorator';
 import { BusinessException } from '~/@systems/exceptions';
 import { I18nTranslations } from '~/assets/i18n.generated';
 import { SystemValue } from '~/common/constants';
 import { NSAccount } from '~/common/enums';
 import { generateCodeHelper } from '~/common/helpers/generate-code.helper';
+import { appBot } from '~/connectors';
 import { IUserTelegraf, SyncWalletReq, TelegramLoginDto } from '~/dto/auth.dto';
-import { AccountEntity } from '~/entities/primary';
-import { AccountRepo, ChatGroupRepo } from '~/repositories/primary';
+import { AccountEntity, AccountReferralEntity } from '~/entities/primary';
+import {
+  AccountReferralRepo,
+  AccountRepo,
+  ChatGroupRepo,
+  TelegramUserRepo,
+} from '~/repositories/primary';
 const { LIST_GROUP, GROUP_CODES } = SystemValue;
 
 const GROUP_BY_ACCOUNT_TYPE = {
@@ -32,6 +38,11 @@ const GROUP_BY_ACCOUNT_TYPE = {
   ],
 };
 
+const REFERRAL_POINT = {
+  PARENT: 100,
+  CHILD: 0,
+};
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -44,6 +55,12 @@ export class AuthService {
 
   @BindRepo(ChatGroupRepo)
   private chatGroupRepo: ChatGroupRepo;
+
+  @BindRepo(AccountReferralRepo)
+  private accountReferralRepo: AccountReferralRepo;
+
+  @BindRepo(TelegramUserRepo)
+  private telegramUserRepo: TelegramUserRepo;
 
   private getListGroupByAccountType(accountType: NSAccount.EType) {
     const codes = GROUP_BY_ACCOUNT_TYPE[accountType];
@@ -135,5 +152,74 @@ export class AuthService {
       throw new BusinessException('Account not existed ');
     }
     return this.createSessionData(account);
+  }
+
+  async getAccountByReferralCode(referralCode: string) {
+    let account = await this.accountRepo.findOne({
+      where: { referralCode: referralCode },
+    });
+    if (!account) {
+      throw new BusinessException('Referral code not found');
+    }
+    return account;
+  }
+
+  async sendUserMessage(account: AccountEntity, message: string) {
+    const accountUserTelegram = await this.telegramUserRepo.findOne({
+      telegramId: account.telegramId,
+    });
+    appBot.telegram.sendMessage(accountUserTelegram.chatId, message).catch(_ => {});
+  }
+
+  @DefTransaction()
+  async saveReferral(accountId: string, referralCode: string, partnerCode = '') {
+    const account = await this.accountRepo.findOne(accountId);
+    const referral = await this.getAccountByReferralCode(referralCode);
+    if (!referral) {
+      throw new BusinessException('Referral code not found');
+    }
+
+    let findReferral = await this.accountReferralRepo
+      .createQueryBuilder('account_referral')
+      .where(
+        'account_referral.accountId = :accountId AND account_referral.referralId = :referralId',
+        {
+          accountId: account.id,
+          referralId: referral.id,
+        },
+      )
+      .orWhere(
+        'account_referral.accountId = :accountId AND account_referral.referralId = :referralId',
+        {
+          accountId: referral.id,
+          referralId: account.id,
+        },
+      )
+      .getOne();
+
+    if (findReferral) {
+      throw new BusinessException('Oops Error! Cross referrals are not allowed!!');
+    }
+
+    if (account.id === referral.id) {
+      throw new BusinessException('Cannot refer yourself');
+    }
+
+    const ar = await this.accountReferralRepo.findOne({ where: { accountId } });
+    if (ar) {
+      throw new BusinessException('Referral code already got');
+    }
+
+    const accountReferral = new AccountReferralEntity();
+    accountReferral.accountId = accountId;
+    accountReferral.referralId = referral.id;
+    accountReferral.referrerCode = referralCode;
+    accountReferral.point = REFERRAL_POINT.PARENT;
+    await this.accountReferralRepo.save(accountReferral);
+    referral.balancePoint += REFERRAL_POINT.PARENT;
+
+    await Promise.all([this.accountRepo.save(referral)]);
+    const referralMessage = `You just received +${REFERRAL_POINT.PARENT} $POINT referral coins from @${account.username}`;
+    this.sendUserMessage(referral, referralMessage).catch(_ => {});
   }
 }

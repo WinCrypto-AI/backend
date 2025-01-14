@@ -1,4 +1,5 @@
 
+export * from './account-referral.entity';
 export * from './account-wallet.entity';
 export * from './account.entity';
 export * from './chat-group-account.entity';
@@ -8,3 +9,4 @@ export * from './notification.entity';
 export * from './payment-transaction.entity';
 export * from './report.entity';
 export * from './signal.entity';
+export * from './telegram-user.entity';
