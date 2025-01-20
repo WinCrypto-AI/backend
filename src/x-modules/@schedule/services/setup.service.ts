@@ -9,7 +9,7 @@ import { I18nService } from 'nestjs-i18n';
 import { I18nTranslations } from '~/assets/i18n.generated';
 import { AuthService } from '~/x-modules/mini-app/services';
 import { BindRepo } from '~/@core/decorator';
-import { AccountRepo, TelegramUserRepo } from '~/repositories/primary';
+import { AccountReferralRepo, AccountRepo, TelegramUserRepo } from '~/repositories/primary';
 import { TelegramUserEntity } from '~/entities/primary';
 const { EMOJI, convertHtmlToTelegramMessage, metaDataGame, reply_markup_user } = SocialContentBot;
 const { htmlMessage, imageTitle } = metaDataGame;
@@ -27,6 +27,9 @@ export class SetupService {
 
   @BindRepo(TelegramUserRepo)
   private telegramUserRepo: TelegramUserRepo;
+
+  @BindRepo(AccountReferralRepo)
+  private accountReferralRepo: AccountReferralRepo;
 
   initTelegramBot() {
     appBot.start(async ctx => {
@@ -119,6 +122,25 @@ export class SetupService {
       if (account?.referralCode) {
         const link = `https://t.me/win_crypto_ai_bot?start=${account?.referralCode}`;
         const message = `Referral Code: ${account?.referralCode} \nLink: ${link}`;
+        ctx.reply(message);
+      }
+    });
+    appBot.command('total_ref', async ctx => {
+      const telegramId = ctx.message.from.id || '';
+      const account = await this.accountRepo.findOne({
+        where: {
+          telegramId,
+        },
+      });
+      if (account?.referralCode) {
+        const totalRef = await this.accountReferralRepo
+          .count({
+            where: {
+              referralId: account.id,
+            },
+          })
+          .catch(_ => 0);
+        const message = `Total ref: ${totalRef}`;
         ctx.reply(message);
       }
     });

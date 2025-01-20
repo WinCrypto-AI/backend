@@ -8,12 +8,12 @@ export class PaymentProvider {
 
   @Interval(5 * 1000)
   async scanPaymentTon() {
-    // try {
-    //   console.log(`=====scanPaymentTon=====`);
-    //   this.paymentService.listenDepositTon(20);
-    //   console.log(`=====scanPaymentTon SUCCESS=====`);
-    // } catch (error) {
-    //   console.error(`=====scanPaymentTon ERROR=====`, error);
-    // }
+    try {
+      console.log(`=====scanPaymentTon=====`);
+      this.paymentService.listenDepositTon(20);
+      console.log(`=====scanPaymentTon SUCCESS=====`);
+    } catch (error) {
+      console.error(`=====scanPaymentTon ERROR=====`, error);
+    }
   }
 }

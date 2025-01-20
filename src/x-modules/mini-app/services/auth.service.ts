@@ -113,11 +113,13 @@ export class AuthService {
   private async createSessionData(account: AccountEntity) {
     const [listGroup, totalRef] = await Promise.all([
       this.getListGroupByAccountType(account.type).catch(_ => []),
-      this.accountReferralRepo.count({
-        where: {
-          referralId: account.id,
-        },
-      }),
+      this.accountReferralRepo
+        .count({
+          where: {
+            referralId: account.id,
+          },
+        })
+        .catch(_ => 0),
     ]);
     const payload = {
       sub: account.id,
