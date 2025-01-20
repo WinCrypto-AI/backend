@@ -111,8 +111,14 @@ export class AuthService {
   }
 
   private async createSessionData(account: AccountEntity) {
-    const listGroup = await this.getListGroupByAccountType(account.type).catch(_ => []);
-
+    const [listGroup, totalRef] = await Promise.all([
+      this.getListGroupByAccountType(account.type).catch(_ => []),
+      this.accountReferralRepo.count({
+        where: {
+          referralId: account.id,
+        },
+      }),
+    ]);
     const payload = {
       sub: account.id,
       ...account,
@@ -124,6 +130,7 @@ export class AuthService {
       tokenType: 'Bearer',
       ...account,
       listGroup,
+      totalRef,
     };
   }
   private async createNewAccountFromTelegramLogin(body: IUserTelegraf) {
