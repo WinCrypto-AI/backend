@@ -43,4 +43,8 @@ export class SignalEntity extends PrimaryBaseEntity {
   @ApiPropertyOptional()
   @Column({ type: 'text', nullable: true })
   note?: string;
+
+  @ApiPropertyOptional()
+  @Column({ default: 'en' })
+  lang?: 'en' | 'vi';
 }

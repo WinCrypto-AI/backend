@@ -30,7 +30,11 @@ export class SignalService {
       title: `Signal ${body?.actionType} ${body?.baseToken}`,
       desc: `Signal ${body?.actionType} ${body?.baseToken}`,
     });
-    return this.signalRepo.save(body);
+
+    return this.signalRepo.save([
+      { ...body, lang: 'en' },
+      { ...body, note: body?.noteVi, lang: 'vi' },
+    ]);
   }
 
   async list(params: ListSignalReq) {

@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { I18nService } from 'nestjs-i18n';
-import { FindConditions, In } from 'typeorm';
+import { In } from 'typeorm';
 import { BindRepo } from '~/@core/decorator';
 import { BusinessException } from '~/@systems/exceptions';
 import { I18nTranslations } from '~/assets/i18n.generated';
 import { NSAccount } from '~/common/enums';
 import { UUIDReq } from '~/dto/common.dto';
-import { CreateSignalReq, ListSignalReq } from '~/dto/signal.dto';
-import { SignalEntity } from '~/entities/primary';
+import { ListSignalReq } from '~/dto/signal.dto';
 import { AccountRepo, NotificationRepo, SignalRepo } from '~/repositories/primary';
 import { miniAppSessionContext } from '../config/mini-app-session.context';
 
@@ -43,10 +42,12 @@ export class SignalService {
     if (accountType === NSAccount.EType.PAID_2000) {
       listTypes.push(NSAccount.EType.PAID_200, NSAccount.EType.PAID_2000);
     }
+    const lang = miniAppSessionContext?.lang || 'en';
     return this.signalRepo.findPagination(
       {
         where: {
           accountType: In(listTypes),
+          lang,
         },
         order: {
           createdDate: params?.sort || 'DESC',

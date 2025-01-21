@@ -17,4 +17,8 @@ export class ReportEntity extends PrimaryBaseEntity {
   @ApiPropertyOptional()
   @Column({ default: NSAccount.EType.FREE })
   accountType?: NSAccount.EType;
+
+  @ApiPropertyOptional()
+  @Column({ default: 'en' })
+  lang?: 'en' | 'vi';
 }

@@ -3,18 +3,21 @@ import { KeySessionContext } from '~/common/constants';
 import { AccountSessionDto } from '~/dto/auth.dto';
 
 export class MiniAppSessionContext {
-  get sessionData() {
+  get lang() {
+    return RequestContext.getAttribute<AccountSessionDto>(KeySessionContext.LANG_SESSION);
+  }
+  get accountData() {
     return RequestContext.getAttribute<AccountSessionDto>(KeySessionContext.ACCOUNT_SESSION);
   }
 
   get accessToken() {
-    return this.sessionData.accessToken;
+    return this.accountData.accessToken;
   }
   get accountId() {
-    return this?.sessionData?.sub;
+    return this?.accountData?.sub;
   }
   get username() {
-    return this.sessionData.username;
+    return this.accountData.username;
   }
 }
 

@@ -6,6 +6,7 @@ import * as allController from './controllers';
 import { AccountMiddleware } from './config/account.middleware';
 import { ChatGateway } from './chat.gateway';
 import { TokenAccountMiddleware } from './config/token-account.middleware';
+import { LangMiddleware } from './config/lang.middleware';
 
 const serviceIn = [ChatGateway];
 
@@ -18,6 +19,9 @@ export class MemberModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(TokenAccountMiddleware)
+      .forRoutes({ path: `${RefixModule.miniApp}*`, method: RequestMethod.ALL });
+    consumer
+      .apply(LangMiddleware)
       .forRoutes({ path: `${RefixModule.miniApp}*`, method: RequestMethod.ALL });
     consumer
       .apply(AccountMiddleware)

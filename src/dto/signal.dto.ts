@@ -40,6 +40,9 @@ export class CreateSignalReq {
 
   @ApiPropertyOptional()
   note?: string;
+
+  @ApiProperty({ default: '' })
+  noteVi?: string;
 }
 
 export class ListSignalReq extends PageRequest {
