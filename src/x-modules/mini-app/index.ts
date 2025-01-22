@@ -15,7 +15,7 @@ const serviceIn = [ChatGateway];
   providers: [...Object.values(allService), ...serviceIn],
   controllers: [...Object.values(allController)],
 })
-export class MemberModule implements NestModule {
+export class MiniAppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(TokenAccountMiddleware)
