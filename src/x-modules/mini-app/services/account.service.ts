@@ -55,4 +55,31 @@ export class AccountService {
 
     return { message: 'Check-in successful', balancePoint: account.balancePoint };
   }
+
+  async canCheckIn(accountId: string) {
+    const now = new Date();
+    const twentyFourHoursAgo = new Date();
+    twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
+
+    // Kiểm tra xem tài khoản có tồn tại không
+    const account = await this.accountRepo.findOne({ where: { id: accountId } });
+    if (!account) {
+      throw new BusinessException('Account not existed');
+    }
+
+    // Kiểm tra user đã check-in trong vòng 24h chưa
+    const existingCheckIn = await this.checkInRepo.findOne({
+      where: {
+        accountId: accountId,
+        checkInDate: MoreThan(twentyFourHoursAgo),
+      },
+    });
+
+    return {
+      canCheckIn: !existingCheckIn, // Nếu không có bản ghi check-in trong 24h => có thể check-in
+      message: existingCheckIn
+        ? 'You have already checked in within the last 24 hours'
+        : 'You can check in now',
+    };
+  }
 }

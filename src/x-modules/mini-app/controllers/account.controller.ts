@@ -14,4 +14,10 @@ export class AccountController {
     const { accountId } = miniAppSessionContext;
     return this.accountService.dailyCheckIn(accountId);
   }
+
+  @DefGet('can-check-in')
+  canCheckIn() {
+    const { accountId } = miniAppSessionContext;
+    return this.accountService.canCheckIn(accountId);
+  }
 }
