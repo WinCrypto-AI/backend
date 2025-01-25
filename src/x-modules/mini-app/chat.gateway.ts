@@ -9,6 +9,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { ChatService } from './services';
+import { SendMessageReq } from '~/dto/chat.dto';
 
 @WebSocketGateway({ cors: true })
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
@@ -41,9 +42,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
 
   @SubscribeMessage('sendMessage')
-  async handleSendMessage(
-    @MessageBody() data: { chatGroupId: string; senderId: string; content: string },
-  ) {
+  async handleSendMessage(@MessageBody() data: SendMessageReq) {
     const message = await this.chatService.sendMessage(data);
     this.server.to(data.chatGroupId).emit('newMessage', message);
     return message;

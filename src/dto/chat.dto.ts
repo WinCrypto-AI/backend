@@ -26,8 +26,10 @@ export class SendMessageReq {
   chatGroupId: string;
   @ApiProperty()
   senderId: string;
-  @ApiProperty()
-  content: string;
+  @ApiPropertyOptional()
+  content?: string;
+  @ApiPropertyOptional()
+  fileUrl?: string;
 }
 
 export class GetMessageReq extends PageRequest {
